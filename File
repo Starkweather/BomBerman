@@ -1,15 +1,8 @@
+//Put Your Player's Name Here
+                                           
+var player = 'Starkweather';
 
-*|-----------------------Highscores----------------------------|
-*
-* TODO : Better Explosion
-* TODO : Better Grass
 
- Put Your Player's Name Here
-                                             **/
-var player = 'Starkweather'; /**<-----------
-
-* 
-**/
 var ES1 = 50;
 var ES2 = 50;
 var ES3 = 50;
@@ -230,7 +223,7 @@ var GameOver = function(){
     textSize(25);
     text("Your Score Was " + score,200,200);
     textSize(15);
-    text("Thank You for Playing " + player + "\nP",200,300);
+    text("Thank You for Playing " + player + "\nAyy\nLmao",200,300);
     text("Play again |\n                  V",325,375);
 };
 var draw = function() {
