@@ -1,0 +1,275 @@
+
+*|-----------------------Highscores----------------------------|
+*
+* TODO : Better Explosion
+* TODO : Better Grass
+
+ Put Your Player's Name Here
+                                             **/
+var player = 'Starkweather'; /**<-----------
+
+* 
+**/
+var ES1 = 50;
+var ES2 = 50;
+var ES3 = 50;
+var ES4 = 50;
+var score = 0;
+var timer = 0;
+var shadow = 50;
+var PlayerX = 200;
+var BombY1 = -15;
+var BombY2 = -15;
+var BombY3 = -15;
+var BombY4 = -15;
+var BombS1 = random(5,10);
+var BombS2 = random(5,10);
+var BombS3 = random(5,10);
+var BombS4 = random(5,10);
+var randomBomb1 = random(0,400);
+var randomBomb2 = random(0,400);
+var randomBomb3 = random(0,400);
+var randomBomb4 = random(0,400);
+var BombDodgerVar = true;
+var HowToPlayVar = false;
+var GamePlayVar = false;
+var GameOverVar = false;
+var keys = [];
+var keyPressed = function(){
+    keys[keyCode] = true;
+};
+var keyReleased = function(){
+    keys[keyCode] = false;
+};
+var BombDodger = function(){
+    fill(0, 0, 0);
+    text('Bomb Dodger',200,100);
+    stroke(0, 0, 0);
+    fill(72, 168, 76);
+    rect(150,175,100,50,10);
+    rect(150,275,100,50,10);
+    fill(0, 0, 0);
+    textSize(25);
+    text('PLAY',200,200);
+    textSize(15);
+    text('How To Play',200,300);
+    if(mouseX>150&&mouseX<250&&mouseY>175&&mouseY<225){
+        stroke(0, 0, 0);
+        fill(255, 255, 255,100);
+        rect(150,175,100,50,10);
+        if(mouseIsPressed){
+            BombDodgerVar = false;
+            GamePlayVar = true;
+        }
+    }
+    if(mouseX>150&&mouseX<250&&mouseY>275&&mouseY<325){
+        stroke(0, 0, 0);
+        fill(255, 255, 255,100);
+        rect(150,275,100,50,10);
+        if(mouseIsPressed){
+            BombDodgerVar = false;
+            HowToPlayVar = true;
+        }
+    }
+};
+var HowToPlay = function(){
+    fill(0, 0, 0);
+    textSize(35);
+    text('How To Play',200,50);
+    textSize(17);
+    text('Move by pressing the Left and Right keys\n\nSurvive the Bomb attack and set a  Highscore',200,200);
+    stroke(0, 0, 0);
+    fill(72, 168, 76);
+    rect(150,325,100,50,10);
+    fill(0, 0, 0);
+    textSize(25);
+    text('BACK',200,350);
+    if(mouseX>150&&mouseX<250&&mouseY>325&&mouseY<375){
+        stroke(0, 0, 0);
+        fill(255, 255, 255,100);
+        rect(150,325,100,50,10);
+        if(mouseIsPressed){
+            BombDodgerVar = true;
+            HowToPlayVar = false;
+        }
+    }
+};
+var GamePlay = function(){
+    fill(0, 0, 0, shadow);
+    ellipse(randomBomb1,305,25,15);
+    fill(255, 227, 117);
+    ellipse(PlayerX,300,25,25);
+    strokeWeight(3);
+    stroke(0, 0, 0);
+    point(PlayerX-5,293);
+    point(PlayerX+5,293);
+    strokeWeight(1);
+    line(PlayerX-5,300,PlayerX+5,300);
+    noStroke();
+    strokeWeight(5);
+    textSize(15);
+    fill(0, 0, 0);
+    text('score : ' + score,200,375);
+    textSize(10);
+    text(player,PlayerX,280);
+    if(keys[LEFT]){PlayerX += -5;}
+    if(keys[RIGHT]){PlayerX += 5;}
+    if(PlayerX < 25/2){PlayerX = 25/2;}
+    if(PlayerX > 400-25/2){PlayerX = 400-25/2;}
+    timer += 0.5;
+    score += 1;
+    fill(0, 0, 0);
+    ellipse(randomBomb1,BombY1,25,25);
+    BombY1 += BombS1;
+    if(BombY1 > 300){
+        ES1+=10;
+        BombY1 = 415;
+    }
+    if(ES1===50){
+        BombY1 = -15;
+        randomBomb1 = random(0,400);
+        BombS1 = random(5,10);
+        ES1=0;
+    }
+    if(score > 250){
+        BombY2 += BombS2;
+        fill(0, 0, 0);
+        ellipse(randomBomb2,BombY2,25,25);
+        if(dist(PlayerX,300,randomBomb2,BombY2)<25){
+            GameOverVar = true;
+            GamePlayVar = false;
+        }
+        if(dist(PlayerX,0,randomBomb2,0)<25){
+            fill(255, 0, 0);
+            textSize(15);
+            text("WARNING",200,325);
+        }
+        if(BombY2 > 300){
+            ES2+=10;
+            BombY2=415;
+        }
+        if(ES2 === 50){
+            BombY2 = -15;
+            randomBomb2 = random(0,400);
+            BombS2 = random(5,10);
+            ES2=0;
+        }
+        fill(255, 0, 0);
+        ellipse(randomBomb2,300,ES2,ES2);
+        fill(0, 0, 0, shadow);
+        ellipse(randomBomb2,305,25,15);
+        if(score > 500){
+            BombY3 += BombS3;
+            fill(0, 0, 0);
+            ellipse(randomBomb3,BombY3,25,25);
+            if(dist(PlayerX,300,randomBomb3,BombY3)<25){
+                GameOverVar = true;
+                GamePlayVar = false;
+            }
+            if(dist(PlayerX,0,randomBomb3,0)<25){
+                fill(255, 0, 0);
+                textSize(15);
+                text("WARNING",200,325);
+            }
+            if(BombY3 > 300){
+                BombY3 = 415;
+                ES3+=10;
+            }
+            if(ES3 ===50){
+                BombY3 = -15;
+                randomBomb3 = random(0,400);
+                BombS3 = random(5,10);
+                ES3 = 0;
+            }
+            fill(0, 0, 0, shadow);
+            ellipse(randomBomb3,305,25,15);
+            if(score > 750){
+                BombY4 += BombS4;
+                fill(0, 0, 0);
+                ellipse(randomBomb4,BombY4,25,25);
+                if(dist(PlayerX,300,randomBomb4,BombY4)<25){
+                    GameOverVar = true;
+                    GamePlayVar = false;
+                }
+                if(dist(PlayerX,0,randomBomb4,0)<25){
+                    fill(255, 0, 0);
+                    textSize(15);
+                    text("WARNING",200,325);
+                }
+                if(BombY4 > 300){
+                    BombY4 = 405;
+                    ES4 +=10;
+                }
+                if(ES4===50){
+                    BombY4 = -15;
+                    randomBomb4 = random(0,400);
+                    BombS4 = random(5,10);
+                    ES4=0;
+                }
+                fill(0, 0, 0, shadow);
+                ellipse(randomBomb4,305,25,15);
+            }
+        }
+    }
+    if(dist(PlayerX,300,randomBomb1,BombY1)<25){
+        GameOverVar = true;
+        GamePlayVar = false;
+    }
+    if(dist(PlayerX,0,randomBomb1,0)<25){
+        fill(255, 0, 0);
+        textSize(15);
+        text("WARNING",200,325);
+    }
+    fill(255, 0, 0);
+    ellipse(randomBomb1,300,ES1,ES1);
+};
+var GameOver = function(){
+    fill(0, 0, 0);
+    textSize(50);
+    text('Game Over',200,75);
+    textSize(25);
+    text("Your Score Was " + score,200,200);
+    textSize(15);
+    text("Thank You for Playing " + player + "\nP",200,300);
+    text("Play again |\n                  V",325,375);
+};
+var draw = function() {
+    //Text
+    var ms = createFont('cursive',20);
+    textFont(ms,50);
+    textAlign(CENTER,CENTER);
+    //Background
+    strokeWeight(5);
+    for(var i=25;i<405;i+=5){
+        stroke(0,i,i);
+        line(0,i-25,400,i-25);
+    }
+    noStroke();
+    fill(0, 150, 0);
+    rect(0,250,400,150);
+    //Function's
+    if(BombDodgerVar===true){
+        BombDodger();
+    }
+    if(HowToPlayVar===true){
+        HowToPlay();
+    }
+    if(GamePlayVar===true){
+        GamePlay();
+    }
+    if(GameOverVar===true){
+        GameOver();
+    }
+};
+
+ fill(0, 255, 0);
+    textAlign(CENTER, CENTER);
+    textSize(30);
+    text("Click if you\nlike this!!", 225, -40);
+    noFill();
+    stroke(0, 255, 0);
+    strokeWeight(3);
+    arc(150, -54, 80, 60, 90, 180);
+    noStroke();
+    fill(0, 255, 0);
+    triangle(110, -70, 120, -55, 100, -55);
